@@ -2,6 +2,8 @@
 
 import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:weather_app/models/forecast_response.dart';
+import 'package:weather_app/models/weather_response.dart';
 import 'package:weather_app/network/weather_api.dart';
 import 'package:weather_app/services/constant.dart';
 import 'package:weather_app/services/endpoint.dart';
@@ -15,7 +17,7 @@ class WeatherService {
     _weatherApi = WeatherApi(dio);
   }
 
-  Future<WeatherResponse> getWeatherByLocation(String apiKey) async {
+  Future<WeatherResponse> getWeatherByLocation() async {
     try {
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       LocationPermission permission = await Geolocator.checkPermission();
@@ -25,12 +27,11 @@ class WeatherService {
       }
 
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-
       final city = await _getCityFromCoordinates(position.latitude, position.longitude);
 
       final weather = await _weatherApi.getWeather(
         city: city,
-        apiKey: apiKey,
+        apiKey: ApiKey.weatherApiKey,
         lang: 'tr',
       );
 
@@ -40,11 +41,11 @@ class WeatherService {
     }
   }
 
-  Future<WeatherResponse> getWeatherByCity(String city, String apiKey) async {
+  Future<WeatherResponse> getWeatherByCity(String city) async {
     try {
       final weather = await _weatherApi.getWeather(
         city: city,
-        apiKey: apiKey,
+        apiKey: ApiKey.weatherApiKey,
         units: 'metric',
         lang: 'tr',
       );
@@ -69,6 +70,39 @@ class WeatherService {
       return response.data['name'];
     } catch (e) {
       throw Exception('Failed to get city name');
+    }
+  }
+
+  Future<ForecastResponse> fetchForecastByLocation() async {
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    final city = await _getCityFromCoordinates(position.latitude, position.longitude);
+
+    try {
+      final forecast = await _weatherApi.getForecast(
+        city: city,
+        apiKey: ApiKey.weatherApiKey,
+        units: "metric",
+        lang: "tr",
+      );
+      return forecast;
+    } catch (e) {
+      print("Error fetching forecast: $e");
+      rethrow;
+    }
+  }
+
+  Future<ForecastResponse> fetchForecastByCity(String city) async {
+    try {
+      final forecast = await _weatherApi.getForecast(
+        city: city,
+        apiKey: ApiKey.weatherApiKey,
+        units: "metric",
+        lang: "tr",
+      );
+      return forecast;
+    } catch (e) {
+      print("Error fetching forecast: $e");
+      rethrow;
     }
   }
 }
