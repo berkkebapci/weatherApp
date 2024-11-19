@@ -1,0 +1,27 @@
+name: weather_app
+description: "Weather app for TusData"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  get: ^4.6.6
+  retrofit: ^4.4.1
+  cupertino_icons: ^1.0.8
+  dio: ^5.7.0
+  json_annotation: ^4.9.0
+  google_fonts: ^6.2.1
+  geolocator: ^13.0.2
+  
+dev_dependencies:
+  build_runner: ^2.4.13
+
+  flutter_test:
+    sdk: flutter
+flutter:
+  uses-material-design: true
