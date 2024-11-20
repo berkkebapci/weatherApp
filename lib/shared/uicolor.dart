@@ -12,9 +12,13 @@ class UIColor {
 }
 
 class UIGradient {
-  static LinearGradient primaryGradient = LinearGradient(
-      colors: [UIColor.primary, UIColor.secondary],
-      begin: Alignment.bottomLeft,
-      end: Alignment.topRight);
+  static LinearGradient primaryGradient =  LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color(0xFF2196F3),
+                  Color.fromARGB(255, 7, 39, 87),
+                ],
+              );
 
 }

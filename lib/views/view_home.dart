@@ -12,7 +12,13 @@ class ViewHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(backgroundColor: Colors.blue, body: getBody()));
+    return SafeArea(
+        child: Container(
+            decoration: BoxDecoration(gradient: UIGradient.primaryGradient),
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              body: getBody(),
+            )));
   }
 
   Widget getBody() {
