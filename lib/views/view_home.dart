@@ -97,12 +97,17 @@ Widget getNowWeather(ControllerHome controller) {
                   color: UIColor.white,
                   fontWeight: FontWeight.w700,
                 ),
+                Image.network(
+                  "https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png",
+                  width: 72,
+                  height: 72,
+                ),
                 TextBasic(
                   text: "${weather.weather[0].description[0].toUpperCase()}${weather.weather[0].description.substring(1)}",
                   color: UIColor.white,
                   fontSize: 18,
                 ),
-                SizedBox(height: 20)
+                SizedBox(height: 32)
               ],
             ),
           );
