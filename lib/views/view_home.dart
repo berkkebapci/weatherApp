@@ -20,7 +20,7 @@ class ViewHome extends StatelessWidget {
       () => controller.isBusy.value
           ? Center(child: WidgetActivityIndicator())
           : SingleChildScrollView(
-            child: Column(
+              child: Column(
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 36),
@@ -35,7 +35,7 @@ class ViewHome extends StatelessWidget {
                   getFiveDayForecast(controller),
                 ],
               ),
-          ),
+            ),
     );
   }
 }
@@ -72,31 +72,40 @@ Widget getSearch(ControllerHome controller) {
 Widget getNowWeather(ControllerHome controller) {
   return Obx(() {
     final weather = controller.weatherData.value;
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 32),
-      child: Column(
-        children: [
-          TextBasic(
-            text: "${weather?.name}",
-            fontSize: 24,
-            color: UIColor.white,
-            fontWeight: FontWeight.w500,
-          ),
-          TextBasic(
-            text: "${weather?.main.temp.toStringAsFixed(0)}°",
-            fontSize: 52,
-            color: UIColor.white,
-            fontWeight: FontWeight.w700,
-          ),
-          TextBasic(
-            text: "${weather?.weather[0].description[0].toUpperCase()}${weather?.weather[0].description.substring(1)}",
-            color: UIColor.white,
-            fontSize: 18,
-          ),
-          SizedBox(height: 20)
-        ],
-      ),
-    );
+    return weather == null
+        ? Padding(
+            padding: const EdgeInsets.only(top: 32),
+            child: TextBasic(
+              text: "Konum bilgisi alınamamıştır. Arama yaparak hava durumu bilgisine ulaşabilirsiniz.",
+              color: UIColor.white,
+              textAlign: TextAlign.center,
+            ),
+          )
+        : Padding(
+            padding: const EdgeInsets.symmetric(vertical: 32),
+            child: Column(
+              children: [
+                TextBasic(
+                  text: "${weather.name}",
+                  fontSize: 24,
+                  color: UIColor.white,
+                  fontWeight: FontWeight.w500,
+                ),
+                TextBasic(
+                  text: "${weather.main.temp.toStringAsFixed(0)}°",
+                  fontSize: 52,
+                  color: UIColor.white,
+                  fontWeight: FontWeight.w700,
+                ),
+                TextBasic(
+                  text: "${weather.weather[0].description[0].toUpperCase()}${weather.weather[0].description.substring(1)}",
+                  color: UIColor.white,
+                  fontSize: 18,
+                ),
+                SizedBox(height: 20)
+              ],
+            ),
+          );
   });
 }
 

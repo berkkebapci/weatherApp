@@ -77,8 +77,13 @@ class ControllerHome extends GetxController {
 
     for (var forecast in forecasts) {
       final date = forecast.dt_txt.split(" ")[0];
+
       if (!dailyForecasts.containsKey(date)) {
         dailyForecasts[date] = forecast;
+      } else {
+        if (forecast.main.temp > dailyForecasts[date]!.main.temp) {
+          dailyForecasts[date] = forecast;
+        }
       }
     }
 
